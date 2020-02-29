@@ -1,12 +1,14 @@
 import React from 'react'
 import AddTodo from '../components/AddTodo';
-import VisibleTodoList from '../components/VisibleTodoList';
+import FilterButton from '../components/FilterButton';
+import TodoFilter from '../components/TodoFilter';
 
 function App() {
   return (
       <div>
           <AddTodo />
-          <VisibleTodoList />
+          <FilterButton />
+          <TodoFilter />
       </div>
   );
 }

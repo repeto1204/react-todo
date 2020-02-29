@@ -1,14 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addTodo, updateInput } from '../store/actions'
+import { addTodo, updateInput, startSagaFetch, startThunkFetch, resetTodo, resetFilter } from '../store/actions/actions'
 
 const AddTodo = (props) => {
-  // dispatch(dummy());
-  // dummy();
 
-
-  function addTodoList(e) {
-    e.preventDefault();
+  function addTodoList() {
     if(props.inputText === '') {
       return ;
     }
@@ -16,17 +12,17 @@ const AddTodo = (props) => {
     props.updateInput('');
   }
 
+
   return (
     <div>
-      <form onSubmit={(e) => addTodoList(e)}>
         <input
-            onChange={(e) => props.updateInput(e.target.value.trim())}
-            value={props.inputText}
+          onChange={(e) => props.updateInput(e.target.value.trim())}
+          value={props.inputText}
         />
-        <button type="submit">
-          Add Todo
-        </button>
-      </form>
+        <button onClick={() => addTodoList()}>Add Todo</button>
+        <button onClick={() => props.startSagaFetch()}>Saga Async</button>
+        <button onClick={() => props.startThunkFetch()}>Thunk Async</button>
+        <button onClick={() => props.resetList()}>Reset List</button>
     </div>
   )
 }
@@ -41,8 +37,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addTodo: (value) => dispatch(addTodo(value)),
-    updateInput: (value) => dispatch(updateInput(value))
+    updateInput: (value) => dispatch(updateInput(value)),
+    startSagaFetch: () => dispatch(startSagaFetch()),
+    startThunkFetch: () => dispatch(startThunkFetch()),
+    resetList: () => {
+      dispatch(resetTodo());
+      dispatch(resetFilter());
+    }
   }
 }
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTodo)
