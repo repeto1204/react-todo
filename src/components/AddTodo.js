@@ -1,6 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addTodo, updateInput, startSagaFetch, startThunkFetch, resetTodo, resetFilter } from '../store/actions/actions'
+import {
+    addTodo,
+    updateInput,
+    asyncAction,
+    startSagaFetch,
+    startThunkFetch,
+    resetTodo,
+    resetFilter
+} from '../store/actions/actions'
 
 const AddTodo = (props) => {
 
@@ -20,6 +28,7 @@ const AddTodo = (props) => {
           value={props.inputText}
         />
         <button onClick={() => addTodoList()}>Add Todo</button>
+        <button onClick={() => props.asyncAction()}>Async Action</button>
         <button onClick={() => props.startSagaFetch()}>Saga Async</button>
         <button onClick={() => props.startThunkFetch()}>Thunk Async</button>
         <button onClick={() => props.resetList()}>Reset List</button>
@@ -38,6 +47,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addTodo: (value) => dispatch(addTodo(value)),
     updateInput: (value) => dispatch(updateInput(value)),
+    asyncAction: () => dispatch(asyncAction()),
     startSagaFetch: () => dispatch(startSagaFetch()),
     startThunkFetch: () => dispatch(startThunkFetch()),
     resetList: () => {

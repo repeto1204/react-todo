@@ -28,6 +28,12 @@ export const changeFilter = filterType => {
   }
 }
 
+export const asyncAction = () => {
+  async function dummy() {
+    await fetch('http://jsonplaceholder.typicode.com/todos');
+  }
+}
+
 export const startSagaFetch = () => {
   return {
     type: 'START_SAGA'
@@ -35,14 +41,14 @@ export const startSagaFetch = () => {
 }
 
 export const startThunkFetch = () => {
-  return (dispatch) => {
-    fetch('http://jsonplaceholder.typicode.com/todos')
-    .then(async (response) => {
-      dispatch({ type: 'GET_THUNK_JSON', value : await response.json() })
-    })
-    .catch((err) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://jsonplaceholder.typicode.com/todos');
+      const parseResponse = await response.json();
+      dispatch({ type: 'GET_THUNK_JSON', value : parseResponse });
+    } catch(err) {
       console.log(err);
-    })
+    }
   }
 }
 
